@@ -73,11 +73,20 @@ function app() {
             denyCode();
             return;
         } else {
-            // check with api sign in if code is valid
-            request("https://api.versutian.site/token?nation=" + internalName + "&token=" + verificationCode, function(tokenRes) {
-                firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
-                    console.log(error.message);
-                });
+            // check verification API
+            document.getElementById('login-form').innerHTML += '<div id="spinner" class="text-center"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><span class="sr-only">Loading...</span></div>';
+            request("https://www.nationstates.net/cgi-bin/api.cgi?a=verify&nation=" + nationName + "&checksum=" + verificationCode, function(verifyRes) {
+                if (verifyRes != 0) {
+                    // verified, get our sign in token
+                    request("https://api.versutian.site/token?nation=" + internalName, function(tokenRes) {
+                        firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
+                            console.log(error.message);
+                        });
+                    });
+                } else {
+                    // code did not match
+                    denyCode();
+                }
             });
         }
     }
@@ -134,7 +143,7 @@ function app() {
         if (user) {
             user.getIdToken().then(function(token) {
                 // redirect to forums
-                window.location.replace('https://forums.versutian.site/');
+                window.location.replace('https://forums.versutian.site/auth/firebase/callback?token=' + token);
             });
         } else {
             showLoginForm();
