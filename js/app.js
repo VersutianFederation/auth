@@ -141,14 +141,10 @@ function app() {
     firebase.auth().onAuthStateChanged(function (user) {
         // are we logged in?
         if (user) {
-            var token = user.getIdToken(false);
-            // is the token fresh?
-            if (token) {
+            user.getIdToken().then(function() {
                 // redirect to forums
                 window.location.replace('https://forums.versutian.site/auth/firebase/callback?token=' + token);
-            } else {
-                showLoginForm();
-            }
+            });
         } else {
             showLoginForm();
         }
