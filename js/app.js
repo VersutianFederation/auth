@@ -132,7 +132,7 @@ function app() {
     firebase.auth().onAuthStateChanged(function (user) {
         // are we logged in?
         if (user) {
-            user.getIdToken().then(function() {
+            user.getIdToken().then(function(token) {
                 // redirect to forums
                 window.location.replace('https://forums.versutian.site/');
             });
