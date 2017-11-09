@@ -75,9 +75,11 @@ function app() {
         } else {
             // check with api sign in if code is valid
             request("https://api.versutian.site/token?nation=" + internalName + "&token=" + verificationCode, function(tokenRes) {
-                firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
-                    console.log(error.message);
-                });
+                if (tokenRes != 0) {
+                    firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
+                        console.log(error.message);
+                    });
+                }
             });
         }
     }
