@@ -86,6 +86,8 @@ function app() {
                     firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
                         console.log(error.message);
                     });
+                } else {
+                    denyCode();
                 }
             });
         }
