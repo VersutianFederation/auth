@@ -1,3 +1,8 @@
+function signOut() {
+    // sign out from firebase auth
+    firebase.auth().signOut();
+}
+
 function app() {
     // Initialize Firebase
     var config = {
@@ -136,7 +141,10 @@ function app() {
         if (user) {
             user.getIdToken().then(function(token) {
                 document.cookie = "__Secure-token=" + token + "; secure; domain=versutian.site; max-age=3600; expires=" + new Date(Date.now() + 3600000).toUTCString();
-                content.innerHTML = '<p class="lead">Congratulations. You have been successfully signed in and may use Versutian Federation web services.</p>'
+                content.innerHTML = '<button id="signout-btn" class="btn btn-secondary btn-sm" onclick="signOut()">sign out</button>';
+                content.innerHTML += '<p class="lead">Congratulations. You have been successfully signed in and may use Versutian Federation web services.</p>';
+                content.innerHTML += '<p>Here are the available services: </p>';
+                content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li></ul>';
             });
         } else {
             showLoginForm();
