@@ -143,7 +143,7 @@ function app() {
         if (user) {
             user.getIdToken().then(function(token) {
                 document.cookie = "__Secure-token=" + token + "; secure; domain=versutian.site; max-age=3600; expires=" + new Date(Date.now() + 3600000).toUTCString();
-                content.innerHTML = '<p class="lead">Congratulations. You have been successfully signed in and may use Versutian Federation web services.</p>';
+                content.innerHTML = '<p class="lead">Congratulations! You have successfully signed in and can use Versutian Federation websites.</p>';
                 content.innerHTML += '<button id="signout-btn" class="btn btn-secondary btn-sm" onclick="signOut()">sign out</button><br><br>';
                 content.innerHTML += '<p>Here are the available services: </p>';
                 content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li></ul>';
