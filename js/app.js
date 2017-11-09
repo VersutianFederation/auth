@@ -133,8 +133,10 @@ function app() {
         // are we logged in?
         if (user) {
             user.getIdToken().then(function(token) {
-                // redirect to forums
-                window.location.replace('https://forums.versutian.site/');
+                var now = Date.now();
+                var expires = now.setTime(now.getTime() + 3600000).toUTCString();
+                document.cookie = "__Secure-token=" + token + "; secure; domain=versutian.site; max-age=3600; expires=" + expires;
+                content.innerHTML = '<p class="lead">Congratulations. You have been successfully signed in and may use Versutian Federation web services.</p>'
             });
         } else {
             showLoginForm();
