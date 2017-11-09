@@ -23,3 +23,24 @@ header {
 .thick {
     font-weight: 600
 }
+
+#navbar-cont {
+    display: block
+}
+
+.navbar-nav {
+    display: inline-block;
+    
+}
+
+.navbarDropdownLinkSpan {
+    font-size: 20px
+}
+
+#navbarDropdownMenuLink {
+    color: rgba(0, 0, 0, 1)
+}
+
+.navbar-brand {
+    margin-right: 0
+}
