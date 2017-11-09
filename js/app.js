@@ -133,9 +133,7 @@ function app() {
         // are we logged in?
         if (user) {
             user.getIdToken().then(function(token) {
-                var now = Date.now();
-                var expires = now.setTime(now.getTime() + 3600000).toUTCString();
-                document.cookie = "__Secure-token=" + token + "; secure; domain=versutian.site; max-age=3600; expires=" + expires;
+                document.cookie = "__Secure-token=" + token + "; secure; domain=versutian.site; max-age=3600; expires=" + new Date(Date.now() + 3600000).toUTCString();
                 content.innerHTML = '<p class="lead">Congratulations. You have been successfully signed in and may use Versutian Federation web services.</p>'
             });
         } else {
