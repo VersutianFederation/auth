@@ -148,7 +148,7 @@ function app() {
                 content.innerHTML = '<p class="lead">Congratulations! You have successfully signed in and can use Versutian Federation websites.</p>';
                 content.innerHTML += '<button id="signout-btn" class="btn btn-secondary btn-sm" onclick="signOut()">sign out</button><br><br>';
                 content.innerHTML += '<p>Here are the available services: </p>';
-                content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li></ul>';
+                content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li><li><a href="https://recruitment.versutian.site">Versutian Recruitment</a></li></ul>';
             });
         } else {
             showLoginForm();
