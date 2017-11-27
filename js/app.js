@@ -80,11 +80,13 @@ function app() {
             denyCode();
             return;
         } else {
+            content.innerHTML += '<div class="text-center" id="spinner"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><span class="sr-only">Loading...</span></div></section>';
             // check with api sign in if code is valid
             request("https://api.versutian.site/token?nation=" + internalName + "&token=" + verificationCode, function(tokenRes) {
                 if (tokenRes != 0) {
                     firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
-                        console.log(error.message);
+                        $('#spinner').remove();
+                        content.innerHTML += error.message;
                     });
                 } else {
                     denyCode();
