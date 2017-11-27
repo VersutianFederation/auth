@@ -95,7 +95,7 @@ function app() {
                     denyCode();
                     alert("denied");
                 }
-            });
+            }, false);
             alert('finished request');
         }
     }
