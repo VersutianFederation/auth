@@ -91,14 +91,11 @@ function app() {
                     firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
                         $('#spinner').remove();
                         response.innerHTML += error.message;
-                        alert(err.message);
                     });
                 } else {
                     denyCode();
-                    alert("denied");
                 }
             }, false);
-            alert('finished request');
         }
     }
 
