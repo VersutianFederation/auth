@@ -49,6 +49,9 @@ function app() {
                 callback(xml ? xhr.responseXML : xhr.responseText);
             }
         };
+        if (url.startsWith('https://api.versutian.site/auth')) {
+            xhr.withCredentials = true;
+        }
         xhr.send();
     }
 
