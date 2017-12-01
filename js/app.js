@@ -1,5 +1,6 @@
 function signOut() {
-    // TODO: request to clear cookie
+    // clear cookie
+    request("https://api.versutian.site/auth/clear", function(ignore) {});
     // sign out from firebase auth
     firebase.auth().signOut();
 }
@@ -152,10 +153,16 @@ function app() {
         // are we logged in?
         if (user) {
             user.getIdToken().then(function(token) {
-                content.innerHTML = '<p class="lead">Congratulations! You have successfully signed in and can use Versutian Federation websites.</p>';
-                content.innerHTML += '<button id="signout-btn" class="btn btn-secondary btn-sm" onclick="signOut()">sign out</button><br><br>';
-                content.innerHTML += '<p>Here are the available services: </p>';
-                content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li><li><a href="https://welcomers.versutian.site">Versutian Welcomers&#39; Guild</a></li></ul>';
+                request("https://api.versutian.site/auth/state?token=" + token, function(stateRes) {
+                    if (stateRes !== 0) {
+                        content.innerHTML = '<p class="lead">Congratulations! You have successfully signed in and can use Versutian Federation websites.</p>';
+                        content.innerHTML += '<button id="signout-btn" class="btn btn-secondary btn-sm" onclick="signOut()">sign out</button><br><br>';
+                        content.innerHTML += '<p>Here are the available services: </p>';
+                        content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li><li><a href="https://welcomers.versutian.site">Versutian Welcomers&#39; Guild</a></li></ul>';
+                    } else {
+                        signOut();
+                    }
+                }, false);
             });
         } else {
             showLoginForm();
