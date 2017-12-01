@@ -86,7 +86,7 @@ function app() {
             response.innerHTML = '<div class="text-center" id="spinner"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><span class="sr-only">Loading...</span></div></section>';
             content.appendChild(response);
             // check with api sign in if code is valid
-            request("https://api.versutian.site/token?nation=" + internalName + "&token=" + verificationCode, function(tokenRes) {
+            request("https://api.versutian.site/auth/token?nation=" + internalName + "&code=" + verificationCode, function(tokenRes) {
                 if (tokenRes != 0) {
                     firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
                         $('#spinner').remove();
@@ -154,7 +154,7 @@ function app() {
                 content.innerHTML = '<p class="lead">Congratulations! You have successfully signed in and can use Versutian Federation websites.</p>';
                 content.innerHTML += '<button id="signout-btn" class="btn btn-secondary btn-sm" onclick="signOut()">sign out</button><br><br>';
                 content.innerHTML += '<p>Here are the available services: </p>';
-                content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li><li><a href="https://recruitment.versutian.site">Versutian Recruitment</a></li></ul>';
+                content.innerHTML += '<ul><li><a href="https://forums.versutian.site">Versutian Forums</a></li><li><a href="https://welcomers.versutian.site">Versutian Welcomers&#39; Guild</a></li></ul>';
             });
         } else {
             showLoginForm();
