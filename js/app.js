@@ -1,6 +1,5 @@
 function signOut() {
-    // reset cookie
-    document.cookie = "__Secure-token=; secure; domain=versutian.site; max-age=3600; expires=" + new Date(0).toUTCString();
+    // TODO: request to clear cookie
     // sign out from firebase auth
     firebase.auth().signOut();
 }
