@@ -89,7 +89,6 @@ function app() {
             content.appendChild(response);
             // check with api sign in if code is valid
             request("https://api.versutian.site/auth/token?nation=" + internalName + "&code=" + verificationCode, function(tokenRes) {
-                console.log(tokenRes);
                 if (tokenRes !== 0) {
                     firebase.auth().signInWithCustomToken(tokenRes).catch(function(error) {
                         $('#spinner').remove();
