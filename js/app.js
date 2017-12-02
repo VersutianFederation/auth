@@ -1,3 +1,34 @@
+function request(url, callback, xml) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            // check if we are on NS API cooldown
+            if (url.startsWith('https://www.nationstates.net/cgi-bin/api.cgi?nation=')) {
+                // notify the user that they're on API cooldown
+                if (xhr.status === 429) {
+                    // notify the user once
+                    if (!nsBan) {
+                        alert('You have been banned for ' + xhr.getResponseHeader('x-retry-after') + ' seconds by the NationStates API');
+                        nsBan = true;
+                    }
+                    // don't callback, we didn't data
+                    return;
+                } else {
+                    // reset ban notification tracker
+                    nsBan = false;
+                }
+            }
+            // give our callback XML if it requested it
+            callback(xml ? xhr.responseXML : xhr.responseText);
+        }
+    };
+    if (url.startsWith('https://api.versutian.site/auth')) {
+        xhr.withCredentials = true;
+    }
+    xhr.send();
+}
+
 function signOut() {
     // clear cookie
     request("https://api.versutian.site/auth/clear", function(ignore) {});
@@ -24,37 +55,6 @@ function app() {
     var verificationCode;
     // main content
     var content = document.getElementById('content');
-
-    function request(url, callback, xml) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                // check if we are on NS API cooldown
-                if (url.startsWith('https://www.nationstates.net/cgi-bin/api.cgi?nation=')) {
-                    // notify the user that they're on API cooldown
-                    if (xhr.status === 429) {
-                        // notify the user once
-                        if (!nsBan) {
-                            alert('You have been banned for ' + xhr.getResponseHeader('x-retry-after') + ' seconds by the NationStates API');
-                            nsBan = true;
-                        }
-                        // don't callback, we didn't data
-                        return;
-                    } else {
-                        // reset ban notification tracker
-                        nsBan = false;
-                    }
-                }
-                // give our callback XML if it requested it
-                callback(xml ? xhr.responseXML : xhr.responseText);
-            }
-        };
-        if (url.startsWith('https://api.versutian.site/auth')) {
-            xhr.withCredentials = true;
-        }
-        xhr.send();
-    }
 
     function denyCode() {
         // user did not input valid verification code
